@@ -7,18 +7,30 @@
 //
 
 import Foundation
+import SpriteKit
 
 class AIPlayer {
     class func play(logController: LogController, floppy: Floppy) {
+        var foundLog = false;
         for node in logController.children {
             if let log = node as? Log {
-                NSLog("\(log.logType)");
-                NSLog("\(log.size)");
-                NSLog("\(log.position)");
+                if log.logType == Log.LogType.bottom && log.position.x + log.size.width > floppy.position.x {
+                    NSLog("\(log.logType)");
+                    NSLog("\(log.size)");
+                    NSLog("\(log.position)");
+                    if (kDebug) {
+                        log.setTint(tint: true);
+                    }
+                    let highestPointOfLog = Double(log.position.y) + Double(log.size.height / 2.0);
+                    if (floppy.position.y < CGFloat(highestPointOfLog + 35)) {
+                        floppy.fly();
+                    }
+                    foundLog = true;
+                    break;
+                }
             }
         }
-        
-        if (floppy.position.y < 200) {
+        if (!foundLog && floppy.position.y < 200) {
             floppy.fly();
         }
     }

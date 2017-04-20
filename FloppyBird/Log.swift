@@ -43,6 +43,15 @@ class Log:SKSpriteNode {
         
     }
     
+    public func setTint(tint : Bool) {
+        if (tint) {
+            self.color = SKColor.red;
+            self.colorBlendFactor = 1.0;
+        } else {
+            self.color = SKColor.white;
+        }
+    }
+    
     override func copy(with zone: NSZone? = nil) -> Any {
         let copy = Log(type: logType!)
         return copy
